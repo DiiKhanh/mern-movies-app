@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import ModeSelect from './components/common/ModeSelect';
+import { ToastContainer } from 'react-toastify';
+import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
+import theme from './configs/theme.configs.js';
+import CssBaseline from '@mui/material/CssBaseline';
 
-function App() {
-  const [count, setCount] = useState(0)
+import 'react-toastify/dist/ReactToastify.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
+const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CssVarsProvider theme={theme}>
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnFocusLoss
+          pauseOnHover
+          theme={theme}
+        />
+        <CssBaseline/>
+        <div>
+          <ModeSelect/>
+        </div>
+      </CssVarsProvider>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
