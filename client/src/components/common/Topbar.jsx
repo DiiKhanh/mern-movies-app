@@ -6,9 +6,10 @@ import Logo from './Logo';
 import ModeSelect from './ModeSelect';
 import menuConfigs from '../../configs/menu.configs';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UserMenu from './UserMenu';
 import Sidebar from './Sidebar';
+import { setAuthModalOpen } from '../../redux/features/authModalSlice';
 
 const ScrollAppBar = ({ children, window }) => {
   const { mode } = useColorScheme();
@@ -35,6 +36,8 @@ const Topbar = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -81,7 +84,7 @@ const Topbar = () => {
             <Stack spacing={3} direction="row" alignItems="center">
               {!user && <Button
                 variant="contained"
-                // onClick={() => dispatch(setAuthModalOpen(true))}
+                onClick={() => dispatch(setAuthModalOpen(true))}
               >
                 sign in
               </Button>}
