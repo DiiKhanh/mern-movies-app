@@ -1,6 +1,11 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 import { colors } from '@mui/material';
 
+export const themeModes = {
+  dark: 'dark',
+  light: 'light'
+};
+
 const theme = extendTheme({
   colorSchemes: {
     dark: {
