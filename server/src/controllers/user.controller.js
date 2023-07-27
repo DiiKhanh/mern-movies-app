@@ -2,7 +2,7 @@ import userModel from '../models/user.model.js';
 import jsonwebtoken from 'jsonwebtoken';
 import responseHandler from '../handlers/response.handler.js';
 
-const signup = async (res, req) => {
+const signup = async (req, res) => {
   try {
     const { username, password, displayName } = req.body;
     const checkUser = await userModel.findOne({ username });
@@ -30,7 +30,7 @@ const signup = async (res, req) => {
   }
 };
 
-const signin = async (res, req) => {
+const signin = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await userModel.findOne({ username }).select('username password salt id displayName');

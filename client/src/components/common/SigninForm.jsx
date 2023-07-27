@@ -5,6 +5,10 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Stack, TextField, Button, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import userApi from '../../apis/modules/user.api';
+import { setUser } from '../../redux/features/userSlice';
+import { setAuthModalOpen } from '../../redux/features/authModalSlice';
+import { toast } from 'react-toastify';
 
 const SigninForm = ({ switchAuthState }) => {
   const dispatch = useDispatch();
@@ -28,8 +32,20 @@ const SigninForm = ({ switchAuthState }) => {
     },
     resolver: yupResolver(schema)
   });
-  const handleSubmit = (data) => {
-    console.log(data);
+  const handleSubmit = async (data) => {
+    setErrorMessage(undefined);
+    setIsLoginRequest(true);
+    const { response, err } = await userApi.signin(data);
+    setIsLoginRequest(false);
+    if (response) {
+      signinForm.reset();
+      dispatch(setUser(response));
+      dispatch(setAuthModalOpen(false));
+      toast.success('Sign in success');
+    }
+    if (err) {
+      setErrorMessage(err.message);
+    }
   };
   // console.log(signinForm);
   return (
