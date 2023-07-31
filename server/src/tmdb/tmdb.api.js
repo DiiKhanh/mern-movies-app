@@ -21,25 +21,30 @@ const tmdbApi = {
     // console.log('getUrl endpoint', tmdbEndpoints.mediaList({ mediaType, mediaCategory, page }));
     // return response.data;
   },
-  mediaDetail: async ({ mediaType, mediaId }) => await axiosClient.get(
-    tmdbEndpoints.mediaDetail({ mediaType, mediaId })
-  ),
+  mediaDetail: async ({ mediaType, mediaId }) => {
+    const endpoint = `${mediaType}/${mediaId}`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  },
   mediaGenres: async ({ mediaType }) => {
     const endpoint = `genre/${mediaType}/list`;
     return await axiosClient.get(tmdbConfig.getUrl(endpoint));
   },
-  mediaCredits: async ({ mediaType, mediaId }) => await axiosClient.get(
-    tmdbEndpoints.mediaCredits({ mediaType, mediaId })
-  ),
-  mediaVideos: async ({ mediaType, mediaId }) => await axiosClient.get(
-    tmdbEndpoints.mediaVideos({ mediaType, mediaId })
-  ),
-  mediaImages: async ({ mediaType, mediaId }) => await axiosClient.get(
-    tmdbEndpoints.mediaImages({ mediaType, mediaId })
-  ),
-  mediaRecommend: async ({ mediaType, mediaId }) => await axiosClient.get(
-    tmdbEndpoints.mediaRecommend({ mediaType, mediaId })
-  ),
+  mediaCredits: async ({ mediaType, mediaId }) => {
+    const endpoint = `${mediaType}/${mediaId}/credits`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  },
+  mediaVideos: async ({ mediaType, mediaId }) => {
+    const endpoint = `${mediaType}/${mediaId}/videos`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  },
+  mediaImages: async ({ mediaType, mediaId }) => {
+    const endpoint = `${mediaType}/${mediaId}/images`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  },
+  mediaRecommend: async ({ mediaType, mediaId }) => {
+    const endpoint = `${mediaType}/${mediaId}/recommendations`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  },
   mediaSearch: async ({ mediaType, query, page }) => await axiosClient.get(
     tmdbEndpoints.mediaSearch({ mediaType, query, page })
   ),
