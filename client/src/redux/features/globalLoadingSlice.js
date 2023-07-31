@@ -12,6 +12,6 @@ export const globalLoadingSlice = createSlice({
   }
 });
 
-export const { etGlobalLoading } = globalLoadingSlice.actions;
+export const { setGlobalLoading } = globalLoadingSlice.actions;
 
 export default globalLoadingSlice.reducer;

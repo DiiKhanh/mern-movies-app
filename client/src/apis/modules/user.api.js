@@ -11,12 +11,10 @@ const userEndpoints = {
 const userApi = {
   signin: async ({ username, password }) => {
     try {
-
       const response = await publicClient.post(
         userEndpoints.signin,
         { username, password }
       );
-
       return { response };
     } catch (err) { return { err }; }
   },

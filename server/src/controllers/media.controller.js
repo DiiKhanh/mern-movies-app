@@ -5,13 +5,12 @@ import favoriteModel from '../models/favorite.model.js';
 import reviewModel from '../models/review.model.js';
 import tokenMiddlerware from '../middlewares/token.middleware.js';
 
+
 const getList = async (req, res) => {
   try {
     const { page } = req.query;
     const { mediaType, mediaCategory } = req.params;
-
     const response = await tmdbApi.mediaList({ mediaType, mediaCategory, page });
-
     return responseHandler.ok(res, response);
   } catch {
     responseHandler.error(res);
