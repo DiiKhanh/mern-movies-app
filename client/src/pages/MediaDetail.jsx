@@ -19,6 +19,10 @@ import Container from '../components/common/Container';
 import CastSlide from '../components/common/CastSlide';
 import favoriteApi from '../apis/modules/favorite.api';
 import MediaVideosSlide from '../components/common/MediaVideosSlide';
+import BackdropSlide from '../components/common/BackdropSlide';
+import PosterSlide from '../components/common/PosterSlide';
+import MediaSlide from '../components/common/MediaSlide';
+import RecommendSlide from '../components/common/RecommendSlide';
 
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams();
@@ -225,12 +229,33 @@ const MediaDetail = () => {
           )}
           {/* media videos */}
           {/* media backdrop */}
+          {media.images.backdrops.length > 0 && (
+            <Container header="backdrops">
+              <BackdropSlide backdrops={media.images.backdrops} />
+            </Container>
+          )}
           {/* media backdrop */}
           {/* media poster */}
+          {media.images.posters.length > 0 && (
+            <Container header="posters">
+              <PosterSlide posters={media.images.posters} />
+            </Container>
+          )}
           {/* media poster */}
           {/* media reviews */}
           {/* media reviews */}
           {/* media recommendation */}
+          <Container header="you may also like">
+            {media.recommend.length > 0 && (
+              <RecommendSlide medias={media.recommend} mediaType={mediaType} />
+            )}
+            {media.recommend.length === 0 && (
+              <MediaSlide
+                mediaType={mediaType}
+                mediaCategory={tmdbConfigs.mediaCategory.top_rated}
+              />
+            )}
+          </Container>
           {/* media recommendation */}
         </Box>
       </>
