@@ -23,6 +23,7 @@ import BackdropSlide from '../components/common/BackdropSlide';
 import PosterSlide from '../components/common/PosterSlide';
 import MediaSlide from '../components/common/MediaSlide';
 import RecommendSlide from '../components/common/RecommendSlide';
+import MediaReview from '../components/common/MediaReview';
 
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams();
@@ -37,6 +38,7 @@ const MediaDetail = () => {
   const videoRef = useRef(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const getMedia = async () => {
       dispatch(setGlobalLoading(true));
       const { response, err } = await mediaApi.getDetail({ mediaType, mediaId });
@@ -243,6 +245,7 @@ const MediaDetail = () => {
           )}
           {/* media poster */}
           {/* media reviews */}
+          <MediaReview reviews={media.reviews} media={media} mediaType={mediaType}/>
           {/* media reviews */}
           {/* media recommendation */}
           <Container header="you may also like">
