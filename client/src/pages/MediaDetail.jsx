@@ -17,6 +17,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Container from '../components/common/Container';
 import CastSlide from '../components/common/CastSlide';
+import favoriteApi from '../apis/modules/favorite.api';
+import MediaVideosSlide from '../components/common/MediaVideosSlide';
 
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams();
@@ -44,6 +46,50 @@ const MediaDetail = () => {
     };
     getMedia();
   }, [mediaType, mediaId, dispatch]);
+
+  const onFavoriteClick = async () => {
+    if (!user) dispatch(setAuthModalOpen(true));
+    if (onRequest) return;
+    if (isFavorite) {
+      onRemoveFavorite();
+      return;
+    }
+    setOnRequest(true);
+    const body = {
+      mediaId: media.id,
+      mediaType: mediaType,
+      mediaTitle: media.title || media.name,
+      mediaPoster: media.poster_path || media.backdrop_path,
+      mediaRate: media.vote_average
+    };
+    const { response, err } = await favoriteApi.add(body);
+    setOnRequest(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      dispatch(addFavorite(response));
+      setIsFavorite(true);
+      toast.success('Add favorite success');
+    }
+  };
+
+  const onRemoveFavorite = async () => {
+    if (onRequest) return;
+    setOnRequest(true);
+
+    const favorite = listFavorites.find(e => e.mediaId.toString() === media.id.toString());
+
+    const { response, err } = await favoriteApi.remove({ favoriteId: favorite.id });
+
+    setOnRequest(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      dispatch(removeFavorite(favorite));
+      setIsFavorite(false);
+      toast.success('Remove favorite success');
+    }
+  };
 
   return (
     media ? (
@@ -126,7 +172,7 @@ const MediaDetail = () => {
                       startIcon={isFavorite ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
                       loadingPosition="start"
                       loading={onRequest}
-                      // onClick={onFavoriteClick}
+                      onClick={onFavoriteClick}
                     />
                     <Button
                       variant="contained"
@@ -143,8 +189,7 @@ const MediaDetail = () => {
                   {media.credits?.cast < 1 ? (
                     <Container header="Cast">
                       <div className="swiper-wrapper">
-                        {' '}
-                      There is no cast for this content.{' '}
+                      There is no cast for this content.
                       </div>
                     </Container>
                   ) : (
@@ -155,9 +200,38 @@ const MediaDetail = () => {
                   {/* cast */}
                 </Stack>
               </Box>
+              {/* media info */}
             </Box>
-            {/* media content */}
           </Box>
+          {/* media content */}
+          {/* media videos */}
+          {media.videos.results < 1 ? (
+            <div ref={videoRef} style={{ paddingTop: '2rem' }}>
+              <Container header="Videos">
+                <div className="swiper-wrapper">
+                  The video of the content has been lost, sorry for the
+                  inconvenience.
+                </div>
+              </Container>
+            </div>
+          ) : (
+            <div ref={videoRef} style={{ paddingTop: '2rem' }}>
+              <Container header="Videos">
+                <MediaVideosSlide
+                  videos={[...media.videos.results].splice(0, 5)}
+                />
+              </Container>
+            </div>
+          )}
+          {/* media videos */}
+          {/* media backdrop */}
+          {/* media backdrop */}
+          {/* media poster */}
+          {/* media poster */}
+          {/* media reviews */}
+          {/* media reviews */}
+          {/* media recommendation */}
+          {/* media recommendation */}
         </Box>
       </>
     ) : null
