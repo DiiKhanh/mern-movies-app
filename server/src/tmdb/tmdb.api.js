@@ -33,9 +33,11 @@ const tmdbApi = {
     const endpoint = `${mediaType}/${mediaId}/recommendations`;
     return await axiosClient.get(tmdbConfig.getUrl(endpoint));
   },
-  mediaSearch: async ({ mediaType, query, page }) => await axiosClient.get(
-    tmdbEndpoints.mediaSearch({ mediaType, query, page })
-  ),
+  mediaSearch: async ({ mediaType, query, page }) => {
+    const params = { query, page };
+    const endpoint = `search/${mediaType}`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint, params));
+  },
   personDetail: async ({ personId }) => await axiosClient.get(
     tmdbEndpoints.personDetail({ personId })
   ),
