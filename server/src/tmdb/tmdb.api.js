@@ -1,5 +1,5 @@
 import axiosClient from '../axios/axios.client.js';
-import tmdbEndpoints from './tmdb.endpoints.js';
+// import tmdbEndpoints from './tmdb.endpoints.js';
 import tmdbConfig from './tmdb.config.js';
 
 
@@ -38,12 +38,14 @@ const tmdbApi = {
     const endpoint = `search/${mediaType}`;
     return await axiosClient.get(tmdbConfig.getUrl(endpoint, params));
   },
-  personDetail: async ({ personId }) => await axiosClient.get(
-    tmdbEndpoints.personDetail({ personId })
-  ),
-  personMedias: async ({ personId }) => await axiosClient.get(
-    tmdbEndpoints.personMedias({ personId })
-  )
+  personDetail: async ({ personId }) => {
+    const endpoint = `person/${personId}`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  },
+  personMedias: async ({ personId }) => {
+    const endpoint = `person/${personId}/combined_credits`;
+    return await axiosClient.get(tmdbConfig.getUrl(endpoint));
+  }
 };
 
 export default tmdbApi;
