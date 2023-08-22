@@ -12,3 +12,10 @@
 [ThemovieDB](https://www.themoviedb.org/)<br>
 [Swiper](https://swiperjs.com/)<br>
 [JWT](https://github.com/auth0/node-jsonwebtoken)<br>
+# Demo 
+[Demo](https://mern-movies-app.vercel.app/)
+# Screenshots
+![Intro](/assets/img/demo/intro.png)
+![List](/assets/img/demo/list.png)
+![Detail](/assets/img/demo/detail.png)
+![Modal](/assets/img/demo/modal.png)
